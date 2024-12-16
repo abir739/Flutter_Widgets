@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modal_bottom_sheet/screens/app_colors.dart';
 import 'package:flutter_modal_bottom_sheet/screens/data_controller.dart';
@@ -11,6 +12,23 @@ class MyTasks extends StatefulWidget {
 }
 
 class _MyTasksState extends State<MyTasks> {
+  final rightEditIcon = Container(
+    padding: const EdgeInsets.only(bottom: 10, right: 20),
+    alignment: Alignment.centerRight,
+    color: Colors.greenAccent,
+    child: const Icon(
+      Icons.edit,
+      color: Colors.white,
+    ),
+  );
+
+  final leftDeleteIcon = Container(
+    padding: const EdgeInsets.only(bottom: 10, left: 20),
+    alignment: Alignment.centerLeft,
+    color: Colors.red,
+    child: const Icon(Icons.delete),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +54,7 @@ class _MyTasksState extends State<MyTasks> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(top: 10, left: 16, right: 16),
+            padding: const EdgeInsets.all(20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -88,6 +106,53 @@ class _MyTasksState extends State<MyTasks> {
                   itemCount: controller.myTask.length,
                   itemBuilder: (context, index) {
                     return Dismissible(
+                        background: leftDeleteIcon,
+                        secondaryBackground: rightEditIcon,
+                        onDismissed: (DismissDirection direction) {
+                          if (kDebugMode) {
+                            print("after dismiss");
+                          }
+                        },
+                        confirmDismiss: (DismissDirection direction) async {
+                          if (direction == DismissDirection.endToStart) {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (_) {
+                                  return Container(
+                                    height: 220,
+                                    decoration: const BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(30),
+                                          topRight: Radius.circular(30),
+                                        )),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 20, right: 20),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          ElevatedButton(
+                                              onPressed: () {},
+                                              child: const Text('View')),
+                                          ElevatedButton(
+                                              onPressed: () {},
+                                              child: const Text('Edit')),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                });
+                            return false;
+                          } else {
+                            controller.deleteTask(index);
+                            return Future.delayed(
+                              const Duration(seconds: 1),
+                              () => direction == DismissDirection.endToStart,
+                            );
+                          }
+                        },
                         key: ObjectKey(index),
                         child: Container(
                           margin: const EdgeInsets.only(
