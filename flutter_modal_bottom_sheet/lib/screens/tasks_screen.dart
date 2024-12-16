@@ -109,7 +109,9 @@ class _MyTasksState extends State<MyTasks> {
                     background: leftDeleteIcon,
                     secondaryBackground: rightEditIcon,
                     onDismissed: (DismissDirection direction) {
-                      print("after dismiss");
+                      if (kDebugMode) {
+                        print("after dismiss");
+                      }
                     },
                     confirmDismiss: (DismissDirection direction) async {
                       if (direction == DismissDirection.endToStart) {
@@ -118,28 +120,31 @@ class _MyTasksState extends State<MyTasks> {
                           barrierColor: Colors.transparent,
                           context: context,
                           builder: (_) {
-                            return Container(
-                              height: 250,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF2e3253).withOpacity(0.4),
-                                borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(20),
-                                  topLeft: Radius.circular(20),
+                            return Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Container(
+                                height: 220,
+                                width: double.maxFinite,
+                                decoration: BoxDecoration(
+                                  color: Colors.blueGrey[300],
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
-                              ),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 20, right: 20),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ElevatedButton(
-                                        onPressed: () {},
-                                        child: const Text('View')),
-                                    ElevatedButton(
-                                        onPressed: () {},
-                                        child: const Text('Edit')),
-                                  ],
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ElevatedButton(
+                                          onPressed: () {},
+                                          child: const Text('View')),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      ElevatedButton(
+                                          onPressed: () {},
+                                          child: const Text('Edit')),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
@@ -156,9 +161,18 @@ class _MyTasksState extends State<MyTasks> {
                     },
                     key: ObjectKey(index),
                     child: Container(
-                      margin: const EdgeInsets.only(
-                          left: 20, right: 20, bottom: 10),
-                      child: Text(controller.myTask[index]["task_name"]!),
+                      margin:
+                          const EdgeInsets.only(left: 8, right: 20, bottom: 10),
+                      child: Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.check_box_outline_blank)),
+                          Expanded(
+                              child:
+                                  Text(controller.myTask[index]["task_name"]!)),
+                        ],
+                      ),
                     ),
                   );
                 },

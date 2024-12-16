@@ -8,8 +8,8 @@ class TaskController extends GetxController {
     super.onInit();
     //Initialise the data
     myTask.addAll([
-      {"task_name": "Try harder"},
-      {"task_name": "Try smarter"},
+      {"task_name": "Dismissible Widget"},
+      {"task_name": "showModalBottomSheet Widget"},
     ]);
   }
 
