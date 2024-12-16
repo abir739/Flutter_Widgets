@@ -100,68 +100,71 @@ class _MyTasksState extends State<MyTasks> {
               ],
             ),
           ),
-          Flexible(child: GetBuilder<TaskController>(
-            builder: (controller) {
+          Flexible(
+            child: GetBuilder<TaskController>(builder: (controller) {
               return ListView.builder(
-                  itemCount: controller.myTask.length,
-                  itemBuilder: (context, index) {
-                    return Dismissible(
-                        background: leftDeleteIcon,
-                        secondaryBackground: rightEditIcon,
-                        onDismissed: (DismissDirection direction) {
-                          if (kDebugMode) {
-                            print("after dismiss");
-                          }
-                        },
-                        confirmDismiss: (DismissDirection direction) async {
-                          if (direction == DismissDirection.endToStart) {
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (_) {
-                                  return Container(
-                                    height: 220,
-                                    decoration: const BoxDecoration(
-                                        color: Colors.transparent,
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(30),
-                                          topRight: Radius.circular(30),
-                                        )),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 20, right: 20),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          ElevatedButton(
-                                              onPressed: () {},
-                                              child: const Text('View')),
-                                          ElevatedButton(
-                                              onPressed: () {},
-                                              child: const Text('Edit')),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                });
-                            return false;
-                          } else {
-                            controller.deleteTask(index);
-                            return Future.delayed(
-                              const Duration(seconds: 1),
-                              () => direction == DismissDirection.endToStart,
+                itemCount: controller.myTask.length,
+                itemBuilder: (context, index) {
+                  return Dismissible(
+                    background: leftDeleteIcon,
+                    secondaryBackground: rightEditIcon,
+                    onDismissed: (DismissDirection direction) {
+                      print("after dismiss");
+                    },
+                    confirmDismiss: (DismissDirection direction) async {
+                      if (direction == DismissDirection.endToStart) {
+                        showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          barrierColor: Colors.transparent,
+                          context: context,
+                          builder: (_) {
+                            return Container(
+                              height: 250,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF2e3253).withOpacity(0.4),
+                                borderRadius: const BorderRadius.only(
+                                  topRight: Radius.circular(20),
+                                  topLeft: Radius.circular(20),
+                                ),
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 20),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton(
+                                        onPressed: () {},
+                                        child: const Text('View')),
+                                    ElevatedButton(
+                                        onPressed: () {},
+                                        child: const Text('Edit')),
+                                  ],
+                                ),
+                              ),
                             );
-                          }
-                        },
-                        key: ObjectKey(index),
-                        child: Container(
-                          margin: const EdgeInsets.only(
-                              left: 20, right: 20, bottom: 10),
-                          child: Text(controller.myTask[index]["task_name"]!),
-                        ));
-                  });
-            },
-          ))
+                          },
+                        );
+                        return false;
+                      } else {
+                        controller.deleteTask(index);
+                        return Future.delayed(
+                          const Duration(seconds: 1),
+                          () => direction == DismissDirection.startToEnd,
+                        );
+                      }
+                    },
+                    key: ObjectKey(index),
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                          left: 20, right: 20, bottom: 10),
+                      child: Text(controller.myTask[index]["task_name"]!),
+                    ),
+                  );
+                },
+              );
+            }),
+          ),
         ],
       ),
     );
