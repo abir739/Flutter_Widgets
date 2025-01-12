@@ -14,6 +14,7 @@ class NoteModel {
       required this.description,
       required this.createdat});
 
+// methods to convert to and from JSON.
   Map<String, Object?> toJson() => {
         NoteFields.id: id,
         NoteFields.isImportant: isImportant ? 1 : 0,
@@ -49,8 +50,8 @@ class NoteModel {
 }
 
 
-
-final String tableNotes = 'notes';
+// Table and Fields: The NoteFields class defines the table and field names used in the database.
+const String tableNotes = 'notes';
 
 class NoteFields {
 
@@ -58,10 +59,10 @@ class NoteFields {
     id, isImportant, number, title, description, createdat
   ];
 
-  static final String id = '_id';
-  static final String isImportant = 'isImportant';
-  static final String number = 'number';
-  static final String title = 'title';
-  static final String description = 'description';
-  static final String createdat = 'createdat';
+  static const String id = '_id';
+  static const String isImportant = 'isImportant';
+  static const String number = 'number';
+  static const String title = 'title';
+  static const String description = 'description';
+  static const String createdat = 'createdat';
 }

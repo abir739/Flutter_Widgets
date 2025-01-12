@@ -2,6 +2,8 @@ import 'package:flutter_sql_database/model/note_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
+// 1- Database Initialization: The NotesDatabase class initializes the database and creates the notes table if it doesn't exist.
+// 2- CRUD Operations: The class provides methods to create, read, update, and delete notes.
 class NotesDatabase {
   // create private Constructor and  initialize the object
   // create instance of the class
@@ -29,10 +31,10 @@ class NotesDatabase {
   }
 
   Future _createDatabase(Database db, int version) async {
-    final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
-    final textType = 'TEXT NOT NULL';
-    final boolType = 'BOOLEAN NOT NULL';
-    final intType = 'INTEGER NOT NULL';
+    const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+    const textType = 'TEXT NOT NULL';
+    const boolType = 'BOOLEAN NOT NULL';
+    const intType = 'INTEGER NOT NULL';
 
     await db.execute('''
 CREATE TABLE $tableNotes (
@@ -51,6 +53,8 @@ ${NoteFields.createdat} $textType)
     db.close();
   }
 
+
+// methods to create, read, update, and delete notes.
 // Create Note
   Future<NoteModel> createNote(NoteModel note) async {
     // first get reference to our database
@@ -60,6 +64,7 @@ ${NoteFields.createdat} $textType)
 
     return note.copyNote(id: id);
   }
+
 
 //read Note
   Future<NoteModel> readNote(int id) async {
@@ -81,8 +86,8 @@ ${NoteFields.createdat} $textType)
 
 // Read All Notes
   Future<List<NoteModel>> readAllNotes() async {
-    final db = instance.database;
-    final orderByTime = '${NoteFields.createdat} ASC';
+    final db = await  instance.database;
+    const orderByTime = '${NoteFields.createdat} ASC';
     final result = await db.query(tableNotes, orderBy: orderByTime);
 
     return result.map((json) => NoteModel.fromJson(json)).toList();
@@ -90,7 +95,7 @@ ${NoteFields.createdat} $textType)
 
 //Update Note
   Future<int> updateNote(NoteModel note) async {
-    final db = instance.database;
+    final db = await instance.database;
 
     return db.update(
       tableNotes,
@@ -102,7 +107,7 @@ ${NoteFields.createdat} $textType)
 
 // delete Note
   Future<int> deleteNote(int id) async {
-    final db = instance.database;
+    final db = await instance.database;
 
     return await db.delete(
       tableNotes,
