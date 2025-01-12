@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sql_database/db/notes_db.dart';
 import 'package:flutter_sql_database/model/note_model.dart';
 import 'package:flutter_sql_database/widget/add_note_widget.dart';
 
@@ -30,8 +31,33 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Center(child: Text('Add Note')),),
-      body: Form(child: AddNoteWidget()),
+      appBar: AppBar(
+        title: const Center(child: Text('Add Note')),
+      ),
+      body: Column(
+        children: [
+          Form(key: _formKey, child: const AddNoteWidget()),
+          ElevatedButton(onPressed: createNote, child: const Text('Creat Note'))
+        ],
+      ),
     );
+  }
+
+  void createNote() async {
+    final isValid = _formKey.currentState!.validate();
+    final note = NoteModel(
+        isImportant: true,
+        number: number,
+        title: title,
+        description: description,
+        createdat: DateTime.now());
+
+    if (isValid) {
+      await NotesDatabase.instance.createNote(note);
+    }
+    setState(() {
+      NotesDatabase.instance.readAllNotes();
+      Navigator.of(context).pop();
+    });
   }
 }
