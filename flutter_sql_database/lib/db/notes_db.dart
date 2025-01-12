@@ -47,7 +47,7 @@ ${NoteFields.createdat} $textType)
       ''');
   }
 
-  Future dbColse() async {
+  Future dbClose() async {
     final db = await instance.database;
 
     db.close();

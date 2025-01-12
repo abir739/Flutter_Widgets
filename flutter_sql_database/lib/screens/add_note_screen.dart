@@ -4,8 +4,7 @@ import 'package:flutter_sql_database/model/note_model.dart';
 import 'package:flutter_sql_database/widget/add_note_widget.dart';
 
 class AddNoteScreen extends StatefulWidget {
-  final NoteModel? note;
-  const AddNoteScreen({required this.note, super.key});
+  const AddNoteScreen({super.key});
 
   @override
   State<AddNoteScreen> createState() => _AddNoteScreenState();
@@ -21,11 +20,10 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   @override
   void initState() {
     super.initState();
-
-    isImportant = widget.note?.isImportant ?? false;
-    number = widget.note?.number ?? 0;
-    title = widget.note?.title ?? '';
-    description = widget.note?.description ?? '';
+    isImportant = false;
+    number = 0;
+    title = '';
+    description = '';
   }
 
   @override
@@ -34,30 +32,34 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
       appBar: AppBar(
         title: const Center(child: Text('Add Note')),
       ),
-      body: Column(
-        children: [
-          Form(key: _formKey, child: const AddNoteWidget()),
-          ElevatedButton(onPressed: createNote, child: const Text('Creat Note'))
-        ],
+      body: Form(
+        key: _formKey,
+        child: AddNoteWidget(
+          onChangedImportant: (value) => setState(() => isImportant = value),
+          onChangedNumber: (value) => setState(() => number = value),
+          onChangedTitle: (value) => setState(() => title = value),
+          onChangedDescription: (value) => setState(() => description = value),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: createNote,
+        child: const Icon(Icons.save),
       ),
     );
   }
 
   void createNote() async {
     final isValid = _formKey.currentState!.validate();
-    final note = NoteModel(
-        isImportant: true,
+    if (isValid) {
+      final note = NoteModel(
+        isImportant: isImportant,
         number: number,
         title: title,
         description: description,
-        createdat: DateTime.now());
-
-    if (isValid) {
+        createdat: DateTime.now(),
+      );
       await NotesDatabase.instance.createNote(note);
-    }
-    setState(() {
-      NotesDatabase.instance.readAllNotes();
       Navigator.of(context).pop();
-    });
+    }
   }
 }

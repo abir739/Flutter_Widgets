@@ -19,9 +19,18 @@ class _NoteCardWidgetState extends State<NoteCardWidget> {
       child: Container(
         padding: const EdgeInsets.all(10),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(createdAt),
-            Text(widget.note.title)],
+            Text(
+              createdAt,
+              style: TextStyle(fontSize: 12, color: Colors.grey),
+            ),
+            SizedBox(height: 4),
+            Text(
+              widget.note.title,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
       ),
     );

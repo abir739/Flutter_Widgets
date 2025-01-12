@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sql_database/model/note_model.dart';
 
-class AddNoteWidget extends StatefulWidget {
+class EditNoteWidget extends StatefulWidget {
+  final NoteModel note;
   final ValueChanged<bool> onChangedImportant;
   final ValueChanged<int> onChangedNumber;
   final ValueChanged<String> onChangedTitle;
   final ValueChanged<String> onChangedDescription;
 
-  const AddNoteWidget({
+  const EditNoteWidget({
     super.key,
+    required this.note,
     required this.onChangedImportant,
     required this.onChangedNumber,
     required this.onChangedTitle,
@@ -15,10 +18,10 @@ class AddNoteWidget extends StatefulWidget {
   });
 
   @override
-  State<AddNoteWidget> createState() => _AddNoteWidgetState();
+  State<EditNoteWidget> createState() => _EditNoteWidgetState();
 }
 
-class _AddNoteWidgetState extends State<AddNoteWidget> {
+class _EditNoteWidgetState extends State<EditNoteWidget> {
   late bool isImportant;
   late int number;
   late String title;
@@ -27,10 +30,10 @@ class _AddNoteWidgetState extends State<AddNoteWidget> {
   @override
   void initState() {
     super.initState();
-    isImportant = false;
-    number = 0;
-    title = '';
-    description = '';
+    isImportant = widget.note.isImportant;
+    number = widget.note.number;
+    title = widget.note.title;
+    description = widget.note.description;
   }
 
   @override
