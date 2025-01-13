@@ -39,9 +39,11 @@ class _AddNoteWidgetState extends State<AddNoteWidget> {
       child: Padding(
         padding: const EdgeInsets.all(25),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
+                Text('Important: '),
                 Switch(
                   value: isImportant,
                   onChanged: (value) {
@@ -49,26 +51,35 @@ class _AddNoteWidgetState extends State<AddNoteWidget> {
                     widget.onChangedImportant(value);
                   },
                 ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Text('Priority: '),
                 Expanded(
                   child: Slider(
                     value: (number).toDouble(),
                     min: 0,
                     max: 5,
                     divisions: 5,
+                    label: number.toString(),
                     onChanged: (value) {
                       setState(() => number = value.toInt());
                       widget.onChangedNumber(value.toInt());
                     },
                   ),
                 ),
+                Text(number.toString()),
               ],
             ),
+            const SizedBox(height: 20),
             TextFormField(
               initialValue: title,
               decoration: const InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Title',
-                hintStyle: TextStyle(color: Colors.grey),
+                border: OutlineInputBorder(),
+                labelText: 'Title',
+                hintText: 'Enter title',
               ),
               validator: (title) => title != null && title.isEmpty
                   ? 'The title can\'t be empty'
@@ -78,12 +89,13 @@ class _AddNoteWidgetState extends State<AddNoteWidget> {
                 widget.onChangedTitle(value);
               },
             ),
+            const SizedBox(height: 20),
             TextFormField(
               initialValue: description,
               decoration: const InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Description...',
-                hintStyle: TextStyle(color: Colors.grey),
+                border: OutlineInputBorder(),
+                labelText: 'Description',
+                hintText: 'Enter description',
               ),
               validator: (description) =>
                   description != null && description.isEmpty
@@ -93,6 +105,7 @@ class _AddNoteWidgetState extends State<AddNoteWidget> {
                 setState(() => description = value);
                 widget.onChangedDescription(value);
               },
+              maxLines: 5,
             ),
           ],
         ),

@@ -67,9 +67,14 @@ class _NotesScreenState extends State<NotesScreen> {
         crossAxisSpacing: 4,
         children: List.generate(notes.length, (index) {
           final note = notes[index];
-          return StaggeredGridTile.fit(
+          return
+
+              // StaggeredGridTile.fit(
+              StaggeredGridTile.count(
             crossAxisCellCount: 1,
+            mainAxisCellCount: 1,
             child: GestureDetector(
+              // add showbutton: edit or delete or read
               onTap: () => editNote(note),
               child: NoteCardWidget(note: note, index: index),
             ),
