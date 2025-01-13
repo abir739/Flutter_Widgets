@@ -46,7 +46,8 @@ class _NotesScreenState extends State<NotesScreen> {
           ),
         ),
       ),
-      body: Center(
+      body: Container(
+        padding: const EdgeInsets.all(16),
         child: isLoading
             ? const CircularProgressIndicator()
             : notes.isEmpty

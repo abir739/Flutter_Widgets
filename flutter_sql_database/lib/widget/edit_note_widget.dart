@@ -54,7 +54,10 @@ class _EditNoteWidgetState extends State<EditNoteWidget> {
                 ),
                 Expanded(
                   child: Slider(
-                    value: number.toDouble(),
+                    value: (number).toDouble(),
+                    min: 0,
+                    max: 5,
+                    divisions: 5,
                     onChanged: (value) {
                       setState(() => number = value.toInt());
                       widget.onChangedNumber(value.toInt());
