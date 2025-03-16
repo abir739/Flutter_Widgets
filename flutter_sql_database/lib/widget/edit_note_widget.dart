@@ -42,9 +42,11 @@ class _EditNoteWidgetState extends State<EditNoteWidget> {
       child: Padding(
         padding: const EdgeInsets.all(25),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
+                const Text('Important: '),
                 Switch(
                   value: isImportant,
                   onChanged: (value) {
@@ -52,6 +54,12 @@ class _EditNoteWidgetState extends State<EditNoteWidget> {
                     widget.onChangedImportant(value);
                   },
                 ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                const Text('Priority: '),
                 Expanded(
                   child: Slider(
                     value: (number).toDouble(),
@@ -64,13 +72,16 @@ class _EditNoteWidgetState extends State<EditNoteWidget> {
                     },
                   ),
                 ),
+                Text(number.toString()),
               ],
             ),
+            const SizedBox(height: 20),
             TextFormField(
               initialValue: title,
               decoration: const InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Title',
+                border: OutlineInputBorder(),
+                labelText: 'Title',
+                hintText: 'Enter title',
                 hintStyle: TextStyle(color: Colors.grey),
               ),
               validator: (title) => title != null && title.isEmpty
@@ -81,11 +92,14 @@ class _EditNoteWidgetState extends State<EditNoteWidget> {
                 widget.onChangedTitle(value);
               },
             ),
+            const SizedBox(height: 20),
             TextFormField(
               initialValue: description,
+              maxLines: 7,
               decoration: const InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Description...',
+                border: OutlineInputBorder(),
+                labelText: 'Description',
+                hintText: 'Enter description',
                 hintStyle: TextStyle(color: Colors.grey),
               ),
               validator: (description) =>
