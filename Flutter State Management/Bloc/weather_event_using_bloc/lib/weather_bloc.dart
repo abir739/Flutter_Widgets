@@ -5,6 +5,8 @@ abstract class WeatherEvent {}
 
 class FetchWeather extends WeatherEvent {}
 
+class ToggleWeather extends WeatherEvent {}
+
 // Define States(the different conditions of our app): the WeatherState
 
 abstract class WeatherStates {}
@@ -20,13 +22,27 @@ class LoadedWeather extends WeatherStates {
 
 // Create a Bloc to handle events and update states
 class WeatherBloc extends Bloc<WeatherEvent, WeatherStates> {
+  bool isSunny = true;
+
   WeatherBloc() : super(InitialWeather()) {
     on<FetchWeather>((event, emit) async {
       emit(LoadingWeather()); // Show loading state
       await Future.delayed(const Duration(seconds: 2)); // Simulate API call
       emit(LoadedWeather("☀️ Sunny 25°C")); // Send new state
     });
+
+    on<ToggleWeather>((event, emit) async {
+      emit(LoadingWeather());
+      await Future.delayed(const Duration(seconds: 2));
+
+      if (isSunny) {
+        emit(LoadedWeather("❄️ Snowy 0°C"));
+      } else {
+        emit(LoadedWeather("☀️ Sunny 25°C"));
+      }
+
+      isSunny = !isSunny;
+      
+    });
   }
 }
-
-

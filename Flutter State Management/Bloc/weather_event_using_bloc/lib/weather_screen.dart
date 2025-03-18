@@ -32,6 +32,10 @@ class WeatherScreen extends StatelessWidget {
                     onPressed: () => context.read<WeatherBloc>().add(FetchWeather()),
                     child: const Text("Refresh Weather"),
                   ),
+                   const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () => context.read<WeatherBloc>().add(ToggleWeather()), 
+                    child: const Text("Toggle Weather ☀️ ❄️"),)
                 ],
               );
             }
