@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         child: Consumer(builder: (context, ref, child) {
           final count = ref.watch(counterProvider);
           return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center ,
             children: [
               Text('count: $count'),
               ElevatedButton(
