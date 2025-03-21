@@ -25,7 +25,11 @@ abstract class TaskState {}
 
 class TaskListUpdated extends TaskState {
   final List<TaskModel> tasks;
-  TaskListUpdated(this.tasks);
+  final int completedCount;
+  final int pendingCount;
+  TaskListUpdated(this.tasks)
+      : completedCount = tasks.where((task) => task.isCompleted).length,
+        pendingCount = tasks.where((task) => !(task.isCompleted)).length;
 }
 
 // Task Bloc

@@ -39,6 +39,18 @@ class TaskScreen extends StatelessWidget {
                 ],
               ),
             ),
+            BlocBuilder<TaskBloc, TaskState>(builder: (context, state) {
+              if (state is TaskListUpdated) {
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                "✅ Completed: ${state.completedCount} | ⏳ Pending: ${state.pendingCount}",
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            );
+              }
+               return const SizedBox.shrink();
+            }),
             Expanded(child:
                 BlocBuilder<TaskBloc, TaskState>(builder: (context, state) {
               if (state is TaskListUpdated) {
