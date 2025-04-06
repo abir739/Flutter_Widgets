@@ -19,7 +19,7 @@ class TaskData extends ChangeNotifier {
   }
 
   void deleteTask(TodoModel task) {
-    _box.delete(task);
+    task.delete();
     notifyListeners();
   }
 

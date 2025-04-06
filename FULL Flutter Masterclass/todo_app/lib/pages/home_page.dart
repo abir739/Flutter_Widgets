@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/bd/todo_data.dart';
 import 'package:todo_app/widgets/task_tile_widget.dart';
 
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -13,8 +12,10 @@ class HomePage extends StatelessWidget {
     final taskController = TextEditingController();
 
     return Scaffold(
+      backgroundColor: Colors.blue[200],
       appBar: AppBar(
-        title: const Text('Mini ToDo App'),
+        elevation: 0,
+        title: const Center(child: Text('Mini ToDo App')),
       ),
       body: Column(
         children: [
@@ -24,24 +25,24 @@ class HomePage extends StatelessWidget {
               itemBuilder: (context, index) {
                 final task = taskData.tasks[index];
                 return TaskTileWidget(
-                  taskName: task.name,
-                   taskIsDone: task.isDone,
-                  onChanged: (value) {
-                    taskData.updateTask(task);
-                  },
-
-                );
+                    taskName: task.name,
+                    taskIsDone: task.isDone,
+                    onChanged: (value) {
+                      taskData.updateTask(task);
+                    },
+                    deleteAction: (context) => taskData.deleteTask(task));
               },
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(20),
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: taskController,
                     decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
                       hintText: 'Add a task',
                     ),
                   ),
