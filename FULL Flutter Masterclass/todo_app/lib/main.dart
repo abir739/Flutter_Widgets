@@ -5,20 +5,29 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/bd/todo_data.dart';
 import 'package:todo_app/models/todo_model.dart';
 import 'package:todo_app/pages/home_page.dart';
+import 'package:todo_app/theme/theme.dart';
+import 'package:todo_app/theme/theme_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // init the hive
   await Hive.initFlutter();
 
   Hive.registerAdapter(TodoModelAdapter());
+  // open a box
   final box = await Hive.openBox<TodoModel>('toDoBox');
 
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => TaskData(box),
-      child: const MyApp(),
-    ),
-  );
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (context) => ThemeProvider(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => TaskData(box),
+      ),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -29,13 +38,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const HomePage(),
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.blue,
-          foregroundColor: Colors.white,
-        ),
-      ),
+      theme: Provider.of<ThemeProvider>(context).themeData,
+      // theme: lightMode,
+      // darkTheme: darkMode,
+
+      // ThemeData(
+      //   primarySwatch: Colors.blue,
+      //   appBarTheme: const AppBarTheme(
+      //     backgroundColor: Colors.blue,
+      //     foregroundColor: Colors.white,
+      //   ),
+      // ),
     );
   }
 }

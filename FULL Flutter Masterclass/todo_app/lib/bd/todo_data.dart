@@ -3,6 +3,8 @@ import 'package:hive/hive.dart';
 import 'package:todo_app/models/todo_model.dart';
 
 class TaskData extends ChangeNotifier {
+  // reference the hive box
+  // final _box = Hive.openBox('toDoBox)
   final Box<TodoModel> _box;
 
   TaskData(this._box);

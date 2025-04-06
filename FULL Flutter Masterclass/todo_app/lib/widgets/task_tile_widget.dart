@@ -34,7 +34,7 @@ class TaskTileWidget extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: Colors.blue,
+            color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(14),
           ),
           child: ListTile(

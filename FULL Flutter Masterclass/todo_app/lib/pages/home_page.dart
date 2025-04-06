@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/bd/todo_data.dart';
+import 'package:todo_app/theme/theme.dart';
+import 'package:todo_app/theme/theme_provider.dart';
 import 'package:todo_app/widgets/task_tile_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,10 +14,17 @@ class HomePage extends StatelessWidget {
     final taskController = TextEditingController();
 
     return Scaffold(
-      backgroundColor: Colors.blue[200],
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         elevation: 0,
         title: const Center(child: Text('Mini ToDo App')),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+              },
+              icon:  Icon(  Provider.of<ThemeProvider>(context).themeData == darkMode ? Icons.sunny : Icons.nightlight))
+        ],
       ),
       body: Column(
         children: [
@@ -47,14 +56,26 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
-                    if (taskController.text.isNotEmpty) {
-                      taskData.addTask(taskController.text);
-                      taskController.clear();
-                    }
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.add,
+                        color: Theme.of(context).colorScheme.secondary,
+                        size: 24,
+                      ),
+                      onPressed: () {
+                        if (taskController.text.isNotEmpty) {
+                          taskData.addTask(taskController.text);
+                          taskController.clear();
+                        }
+                      },
+                    ),
+                  ),
                 ),
               ],
             ),
