@@ -41,15 +41,22 @@ class TaskScreen extends StatelessWidget {
             ),
             BlocBuilder<TaskBloc, TaskState>(builder: (context, state) {
               if (state is TaskListUpdated) {
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                "✅ Completed: ${state.completedCount} | ⏳ Pending: ${state.pendingCount}",
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            );
+                return 
+                // const Row(
+                //   children: [
+                //     FilterButton(
+                //         label: "All", filter: TaskFilter.all, state: state),
+                //   ],
+                // );
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    "✅ Completed: ${state.completedCount} | ⏳ Pending: ${state.pendingCount}",
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                );
               }
-               return const SizedBox.shrink();
+              return const SizedBox.shrink();
             }),
             Expanded(child:
                 BlocBuilder<TaskBloc, TaskState>(builder: (context, state) {
@@ -89,5 +96,22 @@ class TaskScreen extends StatelessWidget {
             }))
           ],
         ));
+  }
+}
+
+class FilterButton extends StatefulWidget {
+  final String labesl;
+  final TaskFilter filter;
+  final TaskListUpdated state;
+  const FilterButton({super.key, required this.labesl, required this.filter, required this.state});
+
+  @override
+  State<FilterButton> createState() => _FilterButtonState();
+}
+
+class _FilterButtonState extends State<FilterButton> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
