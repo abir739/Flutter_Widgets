@@ -9,8 +9,6 @@ class TaskData extends ChangeNotifier {
 
   TaskData(this._box);
 
-
-
   List<TodoModel> get tasks => _box.values.toList();
 
   int get taskCount => _box.length;

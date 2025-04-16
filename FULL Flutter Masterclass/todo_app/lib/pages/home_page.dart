@@ -21,9 +21,13 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+                Provider.of<ThemeProvider>(context, listen: false)
+                    .toggleTheme();
               },
-              icon:  Icon(  Provider.of<ThemeProvider>(context).themeData == darkMode ? Icons.sunny : Icons.nightlight))
+              icon: Icon(
+                  Provider.of<ThemeProvider>(context).themeData == darkMode
+                      ? Icons.sunny
+                      : Icons.nightlight))
         ],
       ),
       body: Column(
