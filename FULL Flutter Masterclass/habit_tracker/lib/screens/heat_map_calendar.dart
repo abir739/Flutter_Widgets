@@ -8,11 +8,11 @@ class HeatmapCalendar extends StatelessWidget {
   final Map<DateTime, int> datasets;
 
   const HeatmapCalendar({
-    Key? key,
+    super.key,
     required this.habit,
     required this.datasets,
     required this.startDate,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +24,6 @@ class HeatmapCalendar extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text(
-              'Completion Heatmap',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 16),
             HeatMap(
               startDate: startDate,
               endDate: DateTime.now(),
@@ -37,7 +32,7 @@ class HeatmapCalendar extends StatelessWidget {
               defaultColor: Theme.of(context).colorScheme.secondary,
               textColor: Colors.white,
               showColorTip: true,
-              showText: false,
+              showText: true,
               scrollable: true,
               size: 30,
               colorsets: {

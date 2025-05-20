@@ -9,4 +9,5 @@ class Habit extends HiveObject {
 
   @HiveField(1)
   List<DateTime> completedDays = [];
+
 }
